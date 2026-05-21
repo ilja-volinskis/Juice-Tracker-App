@@ -36,6 +36,8 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -44,6 +46,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.juicetracker.R
 import com.example.juicetracker.data.Juice
+import com.example.juicetracker.data.JuiceColor
 import com.example.juicetracker.ui.JuiceTrackerViewModel
 import java.util.Locale
 
@@ -110,6 +113,20 @@ fun SheetForm(
             fieldValue = juice.description,
             onValueChange = { description -> onUpdateJuice(juice.copy(description = description)) }
         )
+        ColorSpinnerRow(
+            colorSpinnerPosition = findColorIndex(juice.color),
+            onColorChange = { color ->
+                onUpdateJuice(juice.copy(color = JuiceColor.entries[color].name))
+            },
+            modifier = Modifier
+        )
+        RatingInputRow(
+            rating = juice.rating,
+            onRatingChange = { rating ->
+                onUpdateJuice(juice.copy(rating = rating))
+            },
+            modifier = Modifier
+        )
         ButtonRow(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onCancel = onCancel,
@@ -117,6 +134,11 @@ fun SheetForm(
             submitButtonEnabled = juice.name.isNotEmpty()
         )
     }
+}
+
+private fun findColorIndex(color: String): Int {
+    val juiceColor = JuiceColor.valueOf(color)
+    return JuiceColor.entries.indexOf(juiceColor)
 }
 
 @Composable
