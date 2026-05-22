@@ -1,7 +1,6 @@
 package com.example.juicetracker.ui.bottomsheet
 
 import android.widget.RatingBar
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
